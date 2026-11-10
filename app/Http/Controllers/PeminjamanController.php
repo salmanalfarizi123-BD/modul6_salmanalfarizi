@@ -8,14 +8,12 @@ use Illuminate\Http\Request;
 
 class PeminjamanController extends Controller
 {
-  
     public function create()
     {
         $bukus = Buku::all(); 
         return view('siswa.peminjaman-create', compact('bukus'));
     }
 
-   
     public function store(Request $request)
     {
         $request->validate([
@@ -60,13 +58,11 @@ class PeminjamanController extends Controller
 
         return view('siswa.riwayat', compact('peminjamans'));
     }
-    public function show($id)
-    {
-        // Sengaja mengambil data dengan findOrFail tanpa validasi pemilik (Insecure Direct Object Reference)[cite: 1]
-        $peminjaman = \App\Models\Peminjaman::findOrFail($id);
-        
 
+    // Diperbaiki dari showCelah menjadi show agar rute /peminjaman/{id} merespons dengan benar
+    public function show($id) 
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
         return view('peminjaman.show', compact('peminjaman'));
     }
-
 }
